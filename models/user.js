@@ -1,6 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 const bcrypt = require("bcryptjs");
+const { options } = require("../routes");
 module.exports = (sequelize, DataTypes) => {
 	class User extends Model {
 		/**
@@ -10,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
+			User.belongsToMany(models.Product, {
+				through: models.Cart,
+				foreignKey: "UserId"
+			})
+			 User.hasMany(models.Cart);
 		}
 	}
 	User.init(
@@ -46,7 +52,11 @@ module.exports = (sequelize, DataTypes) => {
 				},
 			},
 		},
-		{
+		{	hooks: {
+			beforeCreate: (user, options) => {
+				user.role = 'customer'
+			}
+		},
 			sequelize,
 			modelName: "User",
 		}

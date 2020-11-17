@@ -35,4 +35,18 @@ const authorization = (req, res, next) => {
     });
 };
 
-module.exports = { authentication, authorization };
+const custAuthorization = async (req, res, next) => {
+	const { id } = req.params;
+	try {
+		const cart = await Cart.findByPk(id);
+		if (cart && cart.UserId === req.userData.id) {
+			next();
+		} else {
+			throw { message: `Forbidden Access`, statusCode: 403 };
+		}
+	} catch (err) {
+		return next(err);
+	}
+};
+
+module.exports = { authentication, authorization, custAuthorization };

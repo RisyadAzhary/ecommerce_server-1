@@ -3,9 +3,7 @@ const secret = 'rahasiadong';
 
 const generateToken = (data) => {
   const access_token = jwt.sign(
-    { email: data.email, id: data.id, role: data.role },
-    secret
-  );
+    { email: data.email, id: data.id, role: data.role },secret);
   return access_token;
 };
 

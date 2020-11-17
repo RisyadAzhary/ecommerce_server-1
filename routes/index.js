@@ -1,26 +1,43 @@
 const router = require("express").Router()
 const UserController =require('../controllers/UserController')
 const ProductController = require("../controllers/ProductController");
-const { authentication, authorization } = require("../middlewares/auth");
+const CartController = require("../controllers/CartController")
+const { authentication, authorization, } = require("../middlewares/auth");
 
 
-
-//login
-
+//login 
 router.post("/login", UserController.login);
+//register
+router.post("/register", UserController.register);
 
-//GET PRODUCTS
-router.get("/products", authentication, authorization, ProductController.show);
+//get product
+router.get("/products",  ProductController.show);
 
-//ADD PRODUCTS
+//------------------------CART-------------------------------------
+router.get("/carts", authentication, CartController.showCart);
+
+router.post("/carts/:id", authentication, CartController.addCart);
+
+router.delete("/carts/:id", authentication, CartController.deleteCart);
+
+router.post("/checkout", authentication, CartController.checkout);
+
+router.get('/carts/:id', authentication, CartController.find)
+router.put('/carts/:id', authentication, CartController.update)
+
+// <--------------------------------------------------------------------------------->
+// <--------------------ADMIN--------------------------------------------------------->
+
+//add (admin)
 router.post("/products", authentication, authorization, ProductController.add);
-
-//EDIT PRODUCTS
-router.get("/products/:id", authentication, authorization, ProductController.find);
+//edit (admin)
 router.put("/products/:id", authentication, authorization, ProductController.edit);
-
-//DELETE PRODUCTS
+router.get("/products/:id", authentication, authorization, ProductController.find);
+//delete product(admin)
 router.delete("/products/:id", authentication, authorization, ProductController.delete);
+
+
+
 
 
 module.exports = router;

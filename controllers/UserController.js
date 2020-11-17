@@ -9,11 +9,9 @@ class UserController {
 				email: req.body.email,
 			},
 		};
-
 		User.findOne(options)
 			.then((data) => {
-
-				console.log(data, ' <<<<<<<< ini data ')
+				console.log(data, " <<<<<<<< ini data ");
 
 				if (data) {
 					let isValid = comparePass(req.body.password, data.password);
@@ -34,8 +32,26 @@ class UserController {
 				}
 			})
 			.catch((err) => {
-				console.log(err, ' <<<<<<<<<< ini eror login ya')
-				return next(err)
+				console.log(err, " <<<<<<<<<< ini eror login ya");
+				return next(err);
+			});
+	}
+
+	static register(req, res, next) {
+		const params = {
+			email: req.body.email,
+			password: req.body.password,
+		};
+		console.log(params,'<<<<<<<<<<<<<<<<<<<< cini params gan')
+		User.create(params)
+			.then((userData) => {
+				res.status(201).json({
+					email: userData.email,
+					msg: "behasil register",
+				});
+			})
+			.catch((err) => {
+				res.status(500).json(err);
 			});
 	}
 }
