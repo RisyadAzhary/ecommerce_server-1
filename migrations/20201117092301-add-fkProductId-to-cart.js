@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-        await queryInterface.addColumn("Carts", "ProductId", {
+  up:  (queryInterface, Sequelize) => {
+        return queryInterface.addColumn("Carts", "ProductId", {
 					type: Sequelize.INTEGER,
 					references: {
 						model: "Products",
@@ -13,9 +13,9 @@ module.exports = {
 				});
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down:  (queryInterface, Sequelize) => {
 
-    return queryInterface.deleteColumn("Carts", "ProductId")
+    return queryInterface.removeColumn("Carts", "ProductId")
     /**
      * Add reverting commands here.
      *
