@@ -15,10 +15,20 @@ module.exports = (sequelize, DataTypes) => {
 	}
 	Cart.init(
 		{
+			id: {
+				type: DataTypes.INTEGER,
+				primaryKey: true,
+				autoIncrement: true,
+			},
 			quantity: DataTypes.INTEGER,
 			status: DataTypes.BOOLEAN,
 		},
 		{
+			hooks: {
+				beforeCreate: (user, options) => {
+					user.status = false;
+				},
+			},
 			sequelize,
 			modelName: "Cart",
 		}
