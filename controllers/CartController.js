@@ -88,17 +88,28 @@ class CartController {
 			const cart = await Cart.findAll({
 				where: {
 					UserId: req.userData.id,
+					status: false
 				},
 				include: Product,
 			});
+
+			console.log(cart,'<<<<<<<<<<<<<<<<<<<ini cart')
 			for (const sell of cart) {
+				// console.log(sell.Product.stock,'<<<<< ini produk stock')
+				// console.log(sell.quantity,'<<<<< ini qty di checkout')
+				console.log(sell.id , '<<<<<<<<<<<<<<< ini sell ya !')
 				let sisaStock = { stock: sell.Product.stock - sell.quantity };
+
+				console.log({stock: sell.Product.stock})
+
+				// console.log(sell.quantity,'<<<<< ini qty di checkout')
+				console.log(sisaStock,'<<<<< ini sisa stocknyaaa')
 				await Product.update(sisaStock, {
 					where: {
 						id: sell.ProductId,
 					},
 				});
-				console.log(sell.id, "<<<<<< INI SELL ID");
+				console.log(sell.id, "<<<<<< INI SELL IDnyaaa");
 				await Cart.update(
 					{
 						status: true,

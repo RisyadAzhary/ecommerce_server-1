@@ -12,6 +12,11 @@ E-Commerce-CMS with name Carrepmu . This app has:
 - GET /products/:id
 - PUT /products/:id
 - DELETE /products/:id
+
+- GET /carts
+- POST /carts/:id
+- DELETE /carts/:id
+- POST /checkout
 ````
 
 ### RESTful endpoints
@@ -285,3 +290,203 @@ _Response (500 - Internal Server Error)_
   "message": "Internal Server Error"
 }
 ```
+
+### GET /carts
+
+> Show all Carrepmu Carts
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+[
+        {
+        "id": 7,
+        "quantity": 5,
+        "status": true,
+        "createdAt": "2020-11-18T14:17:57.077Z",
+        "updatedAt": "2020-11-18T14:23:04.296Z",
+        "UserId": 6,
+        "ProductId": 20,
+        "Product": {
+            "id": 20,
+            "name": "Blender PHILIPS",
+            "image_url": "https://ecs7.tokopedia.net/img/cache/700/product-1/2019/3/28/3371829/3371829_68921874-715e-426c-bd41-f7bf6ed6b295_480_480.jpg",
+            "price": 975000,
+            "stock": 15,
+            "createdAt": "2020-11-18T14:12:17.786Z",
+            "updatedAt": "2020-11-18T14:23:04.315Z"
+        }
+```
+
+_Response (401 - Not Authenticated)_
+```json
+{
+  "message": "Doesnt recognize user.."
+}
+```
+
+_Response (500 - Internal server error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+### POST /carts/:id
+
+> Add Cart by ProductId
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (201)_
+```json
+{
+    "id": 13,
+    "UserId": 6,
+    "ProductId": 16,
+    "quantity": 1,
+    "updatedAt": "2020-11-19T02:29:59.367Z",
+    "createdAt": "2020-11-19T02:29:59.367Z",
+    "status": false
+}
+```
+
+_Response (200)_
+```json
+{
+    "id": 13,
+    "quantity": 2,
+    "status": false,
+    "createdAt": "2020-11-19T02:29:59.367Z",
+    "updatedAt": "2020-11-19T02:30:36.724Z",
+    "UserId": 6,
+    "ProductId": 16
+}
+```
+
+_Response (401 - Not Authenticated)_
+```json
+{
+  "message": "Doesnt recognize user.."
+}
+```
+
+_Response (500 - Internal server error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+### DELETE /carts/:id
+
+> Delete Cart by ProductId
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+[
+{
+    "message": "Deleted Succesfully",
+    "data": 1
+}
+```
+_Response (403 - Forbidden Access)_
+```json
+{
+  "message": "Forbidden Access"
+}
+```
+
+_Response (500 - Internal Server Error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
+### POST /checkout
+
+> Checkout all items in the cart
+
+_Request Header_
+```json
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200)_
+```json
+[
+    {
+        "id": 14,
+        "quantity": 2,
+        "status": false,
+        "createdAt": "2020-11-19T02:33:02.700Z",
+        "updatedAt": "2020-11-19T02:33:04.830Z",
+        "UserId": 6,
+        "ProductId": 18,
+        "Product": {
+            "id": 18,
+            "name": "Setrika",
+            "image_url": "https://ecs7.tokopedia.net/img/cache/700/product-1/2020/2/24/7679456/7679456_0b40a1e7-69d5-4f8d-9db9-c5179d97c22c_714_714.jpg",
+            "price": 65000,
+            "stock": 29,
+            "createdAt": "2020-11-18T14:12:17.786Z",
+            "updatedAt": "2020-11-18T14:32:41.736Z"
+        }
+    }
+```
+
+_Response (401 - Not Authenticated)_
+```json
+{
+  "message": "Doesnt recognize user.."
+}
+```
+
+_Response (500 - Internal server error)_
+```json
+{
+  "message": "Internal Server Error"
+}
+```
+
